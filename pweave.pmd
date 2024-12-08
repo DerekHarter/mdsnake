@@ -19,6 +19,8 @@ header-includes:
   - \usepackage[backend=biber, style=apa]{biblatex}
   - \addbibresource{paper.bib}
   - \usepackage[margin=1.0in]{geometry}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
 abstract: |
   An abstract of this paper.  Describe the paper in a paragraph.
   Use basic and standard approach for creating abstract.
@@ -31,22 +33,123 @@ abstract: |
 \newpage
 \pagenumbering{arabic}
 
-# Test Python Code Block 
+# Python Pweave Code Block Examples 
 
-```{python, name="sinwave", caption="An example of a sin wave"}
+In this section we show examples of using Python
+code and pweave the python code blocks to use in
+a document.
+
+Code blocks are run in a common kernel and are persistent.
+For example, in the first block here we import a bunch of
+libraries and display their versions.  We could set 
+`echo = False` and `results = hidden` in the following code blocks
+to just completely hide it and keep it silent if needed.
+
+```python, name="python_imports", echo=True, results="verbatim"
 import numpy as np
+import matplotlib as mp
 import matplotlib.pyplot as plt
-x = np.linspace(0, 2*np.pi)
-plt.plot(x, np.sin(x))
-print("hello world")
+import pandas as pd
+import seaborn as sns
+
+print("numpy version     : ", np.__version__)
+print("matplotlib version: ", mp.__version__)
+print("pandas version    : ", pd.__version__)
+print("seaborn version   : ", sns.__version__)
 ```
 
-# Another test
+# Basic Python Plot
 
-```{python, name="randomdata", caption="Another figure", results="hidden"}
-x = np.random.rand(100, 2)
-plt.plot(x[:,0], x[:,1], 'bo', label="Random data")
-plt.xlabel('x_1')
-plt.ylabel('x_2')
+The following is a basic example.  It demonstrates plotting a sin
+wave over the range from 0 to $2 \pi$.  Notice that we do not need
+to import the needed libraries for Numpy and Matplotlib, the
+imports and entities created in blocks are persistant across the
+pweave code block runs. This example shows that
+figures are added to the LaTeX documents and numbered as expected.
+We gave a label in the figure caption so we could refer to the
+resulting figured displayed in the document which is Figure \ref{fig:sinwave}. 
+
+```python, name="python_sinwave", echo=True, results="verbatim", caption="An example of a sin wave. \\label{fig:sinwave}"
+x = np.linspace(0, 2*np.pi)
+plt.plot(x, np.sin(x), label="sin wave")
+plt.xlabel("x")
+plt.ylabel(r'$\sin x$')
 plt.legend()
+print("x shape is: ", x.shape)
+```
+
+# Using PWeave Code Block Results in Documents
+
+In the following code example, we load the wine dataset 
+from `scikit-learn` and fit a basic logistic regression
+classifier to the data.
+
+```python, name="python_iris", echo=True, results="verbatim"
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Load Iris dataset
+iris = load_iris(as_frame=True)
+X = iris.data.iloc[:, :2]  # we only take the first two features.
+y = iris.target
+
+# Split dataset into training and test sets
+X_train, X_test, y_train, y_test = \
+  train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train a logistic regression model
+logreg = LogisticRegression(random_state=42)
+logreg.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = logreg.predict(X_test)
+
+# Evaluate the model using accuracy score
+print("Accuracy: %0.4f" % accuracy_score(y_test, y_pred))
+
+```
+
+If we want to weave in results from code blocks runs, we can use inline code
+to report.  For example, the accuracy of the model was 
+<%= accuracy_score(y_test, y_pred) %>.
+
+
+Lets calculate and visualize the confusion matrix.
+
+```python, name="python_confusion", echo=True, results="verbatim", caption="Confusion matrix of classifier. \\label{fig:confusion}"
+from sklearn.metrics import confusion_matrix
+
+# get raw confusion matrix and display on stdout
+cm = confusion_matrix(y_test, y_pred)
+
+# visualize the confusion matrix using a heatmap in a figure
+plt.figure()
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+plt.title("Confusion Matrix Heatmap")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+
+print(cm)
+```
+
+It is often useful to generate tables to display in documents
+using Python/Pandas and various tools.  For example, lets say we want
+to display the summary of the loaded iris dataframe.  We
+can just print it out on stdout.
+
+```python, echo=True, results="verbatim"
+iris.data.describe()
+```
+
+Instead though we can use the `to_latex()` method that will return
+a LaTeX formatted table and insert it into our document. The
+table created is Table \ref{tab:irisdescription}.
+
+```python, name="python_table", echo=False, results="tex"
+df = iris.data.describe()
+# The % in index is causing problems in table so we escape it
+df.index = ['count', 'mean', 'std', 'min', '25pct', '50pct', '75pct', 'max']
+print(df.to_latex(longtable=True, caption="Iris dataset feature description. \\label{tab:irisdescription}"))
 ```

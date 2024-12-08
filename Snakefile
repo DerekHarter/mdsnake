@@ -28,9 +28,9 @@ rule tex_to_pdf:
 	shadow: "shallow"
 	shell:
 		"""
-		pdflatex {input}
-		biber {wildcards.file}
-		pdflatex {input}
+		pdflatex {input} 
+		biber {wildcards.file} 
+		pdflatex {input} 
 		pdflatex {input}
 		"""
 

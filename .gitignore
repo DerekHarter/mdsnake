@@ -1,1 +1,16 @@
+# files specific to this project, depending on the source
+# we ignore all specific document products that are compiled
+# in the project
+paper.pdf
+paper.tex
+pweave.pdf
+pweave.tex
+pweave.md
+slides.pdf
+slides.tex
+slides.md
+
+# general ignores
 .snakemake
+figures/pweave*.png
+
