@@ -1,0 +1,138 @@
+---
+title: "Generative AI Data and Training Issues"
+subtitle: "Bias, Privacy, Intellectual Property"
+author: Derek Harter
+date: Spring 2024
+theme: Madrid
+
+toc: false
+section-titles: false
+header-includes:
+  - \logo{\includegraphics[scale=0.07]{figures/tamuc-logo}}
+  - \title [Memory]{My Title}
+  - \institute[Texas A\&M - Commerce]{Department of Computer Science \\Texas A\&M University - Commerce}
+  - \usepackage[backend=biber, style=apa]{biblatex}
+  - \addbibresource{slides.bib}
+  - \hypersetup{allcolors=blue, colorlinks=true}
+  - \usepackage[percent]{overpic}
+---
+
+# Generative AI Data and Training
+
+\includegraphics[scale=0.47]{figures/generative-ai}
+
+
+# Generative AI Data and Training
+
+::: columns
+
+:::: {.column width=50%}
+
+- Large Language Models (LLM)
+  - ChatGPT (3, 3.5, 4 OpenAI)
+  - Claude (Anthropic)
+  - LLaMa (Meta)
+- Image Generators
+  - DallE (2, 3 OpenAI)
+  - Stable Difussion / DreamStudio (Stability AI)
+  - Gemini (Google) 
+  
+
+::::
+
+:::: {.column width=50%}
+
+\begin{figure}
+\includegraphics[scale=0.25]{figures/gemini-senator}
+\label{fig:gemini-senator}
+\caption{Google Gemini results for prompt to generate senator from the 1800s}
+\end{figure}
+
+::::
+
+:::
+
+
+# Generative AI Data and Training
+
+
+ChatGPT Facts:
+
+- ChatGPT-3 was trained on a massive corpus of text data, around 570GB of datasets, including web pages, books, and other sources.
+- GPT-3 has also been criticized for its lack of common sense knowledge and susceptibility to producing biased or misleading responses.
+- ChatGPT generates biased or inaccurate responses, particularly when the model has not been fine-tuned on specific domain.
+- ChatGPT 3.5 and 4 are not reliable as they hallucinate facts and make reasoning errors.
+- Open AI is facing several lawsuits for copyright infringement in ChatGPT’s training process. Some of the plaintiffs are The New York Times and book authors like George R.R. Martin and John Grisham.
+
+# Issue: Bias and Fairness
+
+::: columns
+
+:::: {.column width=60%}
+
+\begin{figure}
+\includegraphics[scale=0.55]{figures/surgeon-representation}
+\label{fig:surgeon-representation}
+\caption{Survey of representation in image generation for medical personel}
+\end{figure}
+
+::::
+
+:::: {.column width=40%}
+
+- Training data reflects the biases present in society.
+- Results can range from mild problems \parencite{ali-2024} Figure \ref{fig:surgeon-representation}, to more serious like medical applications \parencite{hastings-2024}
+
+\tiny
+\begin{block}{Bias}
+An ambitious study by Travis Zack and Eric Lehman and colleagues in The Lancet Digital Health comprehensively shows that GPT-4 exhibits racial and gender bias across clinically relevant tasks, including the generation of cases for medical education, support for differential diagnostic reasoning, medical plan recommendation, and subjective assessments of patients. 
+\end{block}
+::::
+
+:::
+
+
+# Issue: Intellectual Property and Copyright
+
+Copyright is not an effective solution to the challenges faced by creators in the age of generative AI:
+
+- Despite expansion of copyright laws, creators share of profits has declined (while media companies have increased).
+  1. Creators are not compensated for work used in training from which products are generated.
+  2. Consumers/employers may use Generative AI instead of employing creators.
+
+1. Training Datasets: The use of copyrighted materials in training data raises concerns about potential infringement and unauthorized production.
+2. Output Generation: relationship between outputs and pre-existing materials.
+3. Ownership and Protection: Are Generative AI products eligible for copyright protection?
+
+# Issue: Data Privacy
+
+::: columns
+
+:::: {.column width=50%}
+
+- Included in ChatGPT training data are millions of pages scraped from the web, Reddit posts, Twitter
+  - With large amounts of personal information people share about themselves online.
+- This is getting OpenAI into trouble.
+- Generative AI fine-tuning has been unreliable in preventing private information from leaking back out.
+
+::::
+
+:::: {.column width=50%}
+
+\begin{figure}
+\includegraphics[scale=0.08]{figures/privacy}
+\end{figure}
+
+::::
+
+:::
+
+# Bibliography
+\nocite{tokayev-2023}
+\nocite{wei-2024}
+\nocite{novelli-2024}
+\nocite{ali-2024}
+\nocite{hastings-2024}
+\nocite{doctorow-2023}
+\tiny
+\printbibliography

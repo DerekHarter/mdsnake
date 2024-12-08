@@ -1,0 +1,52 @@
+---
+title: "Test Using pweave"
+description: This is a description.  What does this doe.  Will it work
+  like a abstract
+author: |
+  | Derek Harter
+  | Texas A\&M University - Commerce
+toc: true
+numbersections: true
+date: \today
+classoption: letterpaper, 11pt, onecolumn, oneside, notitlepage
+colorlinks: true
+urlcolor: red
+linkcolor: blue
+toccolor: green
+filecolor: yellow
+citecolor: purple
+header-includes:
+  - \usepackage[backend=biber, style=apa]{biblatex}
+  - \addbibresource{paper.bib}
+  - \usepackage[margin=1.0in]{geometry}
+abstract: |
+  An abstract of this paper.  Describe the paper in a paragraph.
+  Use basic and standard approach for creating abstract.
+---
+
+\pagenumbering{roman}
+\listoffigures
+\listoftables
+
+\newpage
+\pagenumbering{arabic}
+
+# Test Python Code Block 
+
+```{python, name="sinwave", caption="An example of a sin wave"}
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0, 2*np.pi)
+plt.plot(x, np.sin(x))
+print("hello world")
+```
+
+# Another test
+
+```{python, name="randomdata", caption="Another figure", results="hidden"}
+x = np.random.rand(100, 2)
+plt.plot(x[:,0], x[:,1], 'bo', label="Random data")
+plt.xlabel('x_1')
+plt.ylabel('x_2')
+plt.legend()
+```
