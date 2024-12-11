@@ -1,0 +1,25 @@
+# vanilla os apx stack declaration
+# This can be created by doing something like:
+#    $ apx stacks new --name mdsnake --base "ubuntu:latest" --packages "<build-essential, git..." --pkg-manager apt
+# Then an subsystem can be spun up from the apx stack using
+#    $ apx subsystems new --name mdsnake --stack mdsnake
+name: mdsnake
+base: ubuntu:latest
+packages:
+- build-essential
+- git
+- python3
+- biber
+- pandoc
+- snakemake
+- texlive-latex-base
+- texlive-latex-extra
+- texlive-bibtex-extra
+- python3-pweave
+- python3-pandas
+- python3-sklearn
+- python3-numpy
+- python3-seaborn
+- python3-matplotlib
+pkgmanager: apt
+builtin: false
